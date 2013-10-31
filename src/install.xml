@@ -1,0 +1,29 @@
+<project name="designtools" default="install" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property file="common.properties" />
+	<property file="install/ivy.properties" />
+	<import file="install/ivyinstall.xml" />
+
+	<target name="install">
+		<antcall target="ivy.retrieve" />
+		<antcall target="renameFindbugsJars" />
+		<antcall target="unzipCrap4j" />
+	</target>
+	<target name="ivy.retrieve" depends="ivy.install">
+		<ivy:resolve file="install/ivy.xml" />
+		<ivy:retrieve />
+
+	</target>
+	<target name="renameFindbugsJars">
+		<move tofile="${dir.dependencies.tools}/annotations.jar" file="${dir.dependencies.tools}/annotations-2.0.2.jar" />
+		<move tofile="${dir.dependencies.tools}/findbugs.jar" file="${dir.dependencies.tools}/findbugs-2.0.2.jar" />
+		<move tofile="${dir.dependencies.tools}/bcel.jar" file="${dir.dependencies.tools}/bcel-2.0.2.jar" />
+		<move tofile="${dir.dependencies.tools}/jsr305.jar" file="${dir.dependencies.tools}/jsr305-2.0.2.jar" />
+		<move tofile="${dir.dependencies.tools}/jFormatString.jar" file="${dir.dependencies.tools}/jFormatString-2.0.2.jar" />
+	</target>
+	<target name="unzipCrap4j">
+		<unzip src="${dir.dependencies.tools}/crap4j-1.1.6.zip" dest="${dir.dependencies.tools}" />
+		<delete file="${dir.dependencies.tools}/crap4j-1.1.6.zip" />
+	</target>
+
+</project>

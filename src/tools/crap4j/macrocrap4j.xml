@@ -1,0 +1,35 @@
+<project>
+	<property file="tools/crap4j/crap4j.properties" />
+	<taskdef name="crap4j" classname="org.crap4j.anttask.Crap4jAntTask">
+		<classpath>
+			<fileset dir="${CRAP4J_HOME}">
+				<include name="**/*.jar" />
+			</fileset>
+		</classpath>
+	</taskdef>
+	<macrodef name="macrocrap4j">
+		<attribute name="srces" />
+		<attribute name="classes" />
+		<attribute name="testclasses" />
+		<attribute name="filesetidlibclasspath" />
+		<attribute name="outputdir" />
+		<sequential>
+			<mkdir dir="@{outputdir}" />
+			<echo message="${line.separator}Crap4j..." />
+			<crap4j projectdir="@{outputdir}" outputDir="@{outputdir}" dontTest="false" debug="false">
+				<srces>
+					<pathElement location="@{srces}" />
+				</srces>
+				<classes>
+					<pathElement location="@{classes}" />
+				</classes>
+				<testClasses>
+					<pathElement location="@{testclasses}" />
+				</testClasses>
+				<libClasspath>
+					<fileset refid="@{filesetidlibclasspath}" />
+				</libClasspath>
+			</crap4j>
+		</sequential>
+	</macrodef>
+</project>

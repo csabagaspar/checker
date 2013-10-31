@@ -1,0 +1,33 @@
+<project>
+	<property file="tools/javadoc/javadoc.properties" />
+	<path id="path.javadoc">
+		<fileset dir="${dir.dependencies.tools}">
+			<include name="UmlGraph-5.6.jar" />
+		</fileset>
+	</path>
+	<macrodef name="macrojavadoc">
+		<attribute name="sourcepath" />
+		<attribute name="dirreports" />
+		<attribute name="classpathref" />
+		<sequential>
+			<javadoc sourcepath="@{sourcepath}" destdir="@{dirreports}" access="private" useexternalfile="true" classpathref="@{classpathref}">
+				<doclet name="org.umlgraph.doclet.UmlGraphDoc" pathref="path.javadoc">
+					<param name="-inferrel" />
+					<param name="-inferdep" />
+					<param name="-quiet" />
+					<param name="-hide" value="java.*" />
+					<param name="-collpackages" value="java.util.*" />
+					<param name="-qualify" />
+					<param name="-postfixpackage" />
+					<param name="-nodefontsize" value="9" />
+					<param name="-nodefontpackagesize" value="7" />
+					<param name="-attributes" />
+					<param name="-operations" />
+					<param name="-enumerations" />
+					<param name="-enumconstants" />
+					<param name="-visibility" />
+				</doclet>
+			</javadoc>
+		</sequential>
+	</macrodef>
+</project>

@@ -1,0 +1,41 @@
+<project>
+	<property file="tools/pmd/pmd.properties" />
+	<path id="path.pmd">
+		<fileset dir="${dir.dependencies.tools}">
+			<include name="jaxen-1.1.1.jar" />
+			<include name="asm-3.3.jar" />
+			<include name="pmd-5.0.2.jar" />
+		</fileset>
+	</path>
+
+	<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="path.pmd" />
+	<macrodef name="macropmd">
+		<attribute name="filesetid" />
+		<attribute name="dirreports" />
+		<attribute name="rulesetfiles" />
+		<sequential>
+			<echo message="${line.separator}Pmd ..." />
+			<mkdir dir="@{dirreports}" />
+			<pmd rulesetfiles="@{rulesetfiles}">
+				<formatter type="xml" toFile="@{dirreports}/report.xml" />
+				<fileset refid="@{filesetid}" />
+			</pmd>
+			<xslt in="@{dirreports}/report.xml" style="${pmd.style}" out="@{dirreports}/index.html" />
+		</sequential>
+	</macrodef>
+
+	<taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" classpathref="path.pmd" />
+	<macrodef name="macrocpd">
+		<attribute name="filesetid" />
+		<attribute name="dirreports" />
+		<sequential>
+			<echo message="${line.separator}Cpd ..." />
+			<mkdir dir="@{dirreports}" />
+			<cpd format="xml" minimumTokenCount="${cpd.minimumTokenCount}" outputFile="@{dirreports}/report.xml">
+				<fileset refid="@{filesetid}" />
+			</cpd>
+			<xslt in="@{dirreports}/report.xml" style="${cpd.style}" out="@{dirreports}/index.html" />
+		</sequential>
+	</macrodef>
+
+</project>

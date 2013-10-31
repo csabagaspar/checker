@@ -1,0 +1,16 @@
+<project>
+	<macrodef name="macrocompile">
+		<attribute name="srcdir" />
+		<attribute name="destdir" />
+		<attribute name="classpathrefid" />
+		<sequential>
+			<mkdir dir="@{destdir}" />
+			<echo message="${line.separator}Compile ..." />
+			<javac srcdir="@{srcdir}" destdir="@{destdir}" debug="on" includeAntRuntime="no">
+				<classpath refid="@{classpathrefid}" />
+				<compilerarg value="-Xlint:unchecked" />
+				<compilerarg value="-Werror" />
+			</javac>
+		</sequential>
+	</macrodef>
+</project>

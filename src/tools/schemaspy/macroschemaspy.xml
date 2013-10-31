@@ -1,0 +1,28 @@
+<project>
+	<property file="tools/schemaspy/schemaspy.properties" />
+	<path id="path.schemaspy">
+		<fileset dir="${dir.dependencies.tools}">
+			<include name="schemaspy-5.0.0.jar" />
+		</fileset>
+	</path>
+	<macrodef name="macroschemaspy">
+		<attribute name="dirreports" />
+		<sequential>
+			<echo message="${line.separator}Schemaspy ..." />
+			<mkdir dir="@{dirreports}" />
+			<java classname="net.sourceforge.schemaspy.Main" fork="yes" output="@{dirreports}/output.log" error="@{dirreports}/error.log">
+				<classpath refid="path.schemaspy" />
+				<arg line="-t mysql" />
+				<arg line="-host localhost" />
+				<arg line="-port 3306" />
+				<arg line="-db tass_pdurbs_test_configdb" />
+				<arg line="-u tass" />
+				<arg line="-s tass" />
+				<arg line="-p tass" />
+				<arg line="-dp ${dir.dependencies.tools}/mysql-connector-java-5.1.26.jar" />
+				<arg line="-hq" />
+				<arg line="-o @{dirreports}" />
+			</java>
+		</sequential>
+	</macrodef>
+</project>

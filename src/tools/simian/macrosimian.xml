@@ -1,0 +1,23 @@
+<project>
+	<property file="tools/simian/simian.properties" />
+	<path id="path.simian">
+		<fileset dir="${dir.dependencies.tools}">
+			<include name="simian-2.3.33.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="simiantask.properties" classpathref="path.simian" />
+	<macrodef name="macrosimian">
+		<attribute name="filesetid" />
+		<attribute name="dirreports" />
+		<sequential>
+			<echo message="${line.separator}Simian ..." />
+			<mkdir dir="@{dirreports}" />
+			<simian>
+				<formatter type="xml" toFile="@{dirreports}/report.xml" />
+				<fileset refid="@{filesetid}" />
+			</simian>
+			<xslt in="@{dirreports}/report.xml" style="${simian.style}" out="@{dirreports}/index.html" />
+		</sequential>
+	</macrodef>
+</project>

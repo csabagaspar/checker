@@ -1,0 +1,24 @@
+<project>
+	<property file="tools/jdepend/jdepend.config.properties" />
+	<path id="path.jdepend">
+		<fileset dir="${dir.dependencies.tools}">
+			<include name="jdepend-2.9.1.jar" />
+		</fileset>
+		<pathelement location="jdepend" />
+	</path>
+	<macrodef name="macrojdepend">
+		<attribute name="dirclasses" />
+		<attribute name="dirreports" />
+		<sequential>
+			<echo message="${line.separator}JDepend" />
+			<mkdir dir="@{dirreports}" />
+			<java classname="jdepend.xmlui.JDepend" fork="yes" output="@{dirreports}/error.txt">
+				<classpath refid="path.jdepend" />
+				<arg value="-file" />
+				<arg value="@{dirreports}/report.xml" />
+				<arg value="@{dirclasses}" />
+			</java>
+			<xslt in="@{dirreports}/report.xml" style="${jdepend.style}" out="@{dirreports}/index.html" />
+		</sequential>
+	</macrodef>
+</project>

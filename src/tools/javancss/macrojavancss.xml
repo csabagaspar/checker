@@ -1,0 +1,23 @@
+<project>
+	<property file="tools/javancss/javancss.properties" />
+	<path id="path.javancss">
+		<fileset dir="${dir.dependencies.tools}">
+			<include name="javancss-32.53.jar" />
+			<include name="ccl-29.50.jar" />
+			<include name="jhbasic-29.50.jar" />
+		</fileset>
+	</path>
+	<taskdef name="javancss" classname="javancss.JavancssAntTask" classpathref="path.javancss" />
+	<macrodef name="macrojavancss">
+		<attribute name="srcdir" />
+		<attribute name="include" />
+		<attribute name="exclude" />
+		<attribute name="dirreports" />
+		<sequential>
+			<echo message="${line.separator}JavaNCSS" />
+			<mkdir dir="@{dirreports}" />
+			<javancss srcdir="@{srcdir}" format="xml" generateReport="true" outputfile="@{dirreports}/report.xml" includes="@{include}" excludes="${exclude}" />
+			<xslt in="@{dirreports}/report.xml" style="${javancss.style}" out="@{dirreports}/index.html" />
+		</sequential>
+	</macrodef>
+</project>

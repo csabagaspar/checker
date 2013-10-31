@@ -1,0 +1,27 @@
+<project>
+	<property file="tools/checkstyle/checkstyle.properties" />
+	<path id="path.checkstyle">
+		<fileset dir="${dir.dependencies.tools}">
+			<include name="checkstyle-5.6.jar" />
+			<include name="google-collections-1.0.jar" />
+			<include name="commons-beanutils-core-1.8.3.jar" />
+			<include name="commons-logging-1.1.1.jar" />
+			<include name="antlr-2.7.7.jar" />
+		</fileset>
+	</path>
+	<taskdef resource="checkstyletask.properties" classpathref="path.checkstyle" />
+	<macrodef name="macrocheckstyle">
+		<attribute name="filesetid" />
+		<attribute name="dirreports" />
+		<attribute name="checkstyleconfig" />
+		<sequential>
+			<echo message="${line.separator}Checkstyle ..." />
+			<mkdir dir="@{dirreports}" />
+			<checkstyle config="@{checkstyleconfig}" failOnViolation="false">
+				<formatter type="xml" tofile="@{dirreports}/report.xml" />
+				<fileset refid="@{filesetid}" />
+			</checkstyle>
+			<xslt in="@{dirreports}/report.xml" style="${checkstyle.style}" out="@{dirreports}/index.html" />
+		</sequential>
+	</macrodef>
+</project>

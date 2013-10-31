@@ -1,0 +1,178 @@
+<project name="check" default="compile" basedir=".">
+	<property file="common.properties" />
+	<property file="build.properties" />
+
+	<import file="tools/compile/macrocompile.xml" />
+	<import file="tools/crap4j/macrocrap4j.xml" />
+	<import file="tools/checkstyle/macrocheckstyle.xml" />
+	<import file="tools/pmd/macropmd.xml" />
+	<import file="tools/jdepend/macrojdepend.xml" />
+	<import file="tools/javancss/macrojavancss.xml" />
+	<import file="tools/simian/macrosimian.xml" />
+	<import file="tools/findbugs/macrofindbugs.xml" />
+	<import file="tools/javadoc/macrojavadoc.xml" />
+	<import file="tools/testability/macrotestability.xml" />
+	<import file="tools/schemaspy/macroschemaspy.xml" />
+
+	<target name="all">
+		<antcall target="clean" />
+		<antcall target="compileTest" />
+		<antcall target="checkstyle" />
+		<antcall target="pmd" />
+		<antcall target="jdepend" />
+		<antcall target="javancss" />
+		<antcall target="simian" />
+		<antcall target="findbugs" />
+		<antcall target="testability" />
+		<antcall target="crap4j" />
+		<antcall target="javadoc" />
+	</target>
+
+	<fileset id="fileset.src" dir="${dir.src}">
+		<include name="${dir.src.include}" />
+		<exclude name="${dir.src.exclude}" />
+	</fileset>
+	<fileset id="fileset.src.test" dir="${dir.src.test}">
+		<include name="${dir.src.test.include}" />
+		<exclude name="${dir.src.test.exclude}" />
+	</fileset>
+
+	<path id="path.dependencies">
+		<fileset dir="${dir.dependencies}" id="fileset.dependencies">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="path.dependencies.test">
+		<pathelement location="${dir.classes}" />
+		<path refid="path.dependencies" />
+		<fileset dir="${dir.dependencies.test}" id="fileset.dependencies.test">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete dir="${dir.target}" />
+		<delete dir="${dir.reports}" />
+	</target>
+
+	<target name="compile">
+		<macrocompile srcdir="${dir.src}" destdir="${dir.classes}" classpathrefid="path.dependencies" />
+	</target>
+
+	<target name="compileTest" depends="compile">
+		<macrocompile srcdir="${dir.src.test}" destdir="${dir.classes.test}" classpathrefid="path.dependencies.test" />
+	</target>
+
+	<target name="crap4j">
+		<macrocrap4j srces="${dir.src}" classes="${dir.classes}" testclasses="${dir.classes.test}" filesetidlibclasspath="fileset.dependencies" outputdir="${dir.reports}/crap4j" />
+	</target>
+
+	<target name="checkstyle">
+		<antcall target="checkstyle-duplicatedcode-src" />
+		<antcall target="checkstyle-duplicatedcode-src-test" />
+	</target>
+
+	<target name="checkstyle-duplicatedcode-src">
+		<macrocheckstyle filesetid="fileset.src" dirreports="${dir.reports}/checkstyle-duplicatedcode-src" checkstyleconfig="${checkstyle.config.duplicatedcode}" />
+	</target>
+	<target name="checkstyle-duplicatedcode-src-test">
+		<macrocheckstyle filesetid="fileset.src.test" dirreports="${dir.reports}/checkstyle-duplicatedcode-src-test" checkstyleconfig="${checkstyle.config.duplicatedcode}" />
+	</target>
+
+	<target name="pmd">
+		<antcall target="pmd-src" />
+		<antcall target="pmd-src-test" />
+		<antcall target="pmd-cpd-src" />
+		<antcall target="pmd-cpd-src-test" />
+	</target>
+	<target name="pmd-src">
+		<macropmd filesetid="fileset.src" dirreports="${dir.reports}/pmd-src" rulesetfiles="${pmd.rulsetfiles}" />
+	</target>
+	<target name="pmd-src-test">
+		<macropmd filesetid="fileset.src.test" dirreports="${dir.reports}/pmd-src-test" rulesetfiles="${pmd.rulsetfiles}" />
+	</target>
+	<target name="pmd-cpd-src">
+		<macrocpd filesetid="fileset.src" dirreports="${dir.reports}/pmd-cpd-src" />
+	</target>
+	<target name="pmd-cpd-src-test">
+		<macrocpd filesetid="fileset.src.test" dirreports="${dir.reports}/pmd-cpd-src-test" />
+	</target>
+
+	<target name="jdepend">
+		<antcall target="jdepend-src" />
+		<antcall target="jdepend-src-test" />
+	</target>
+
+	<target name="jdepend-src">
+		<macrojdepend dirclasses="${dir.classes}" dirreports="${dir.reports}/jdepend-src" />
+	</target>
+	<target name="jdepend-src-test">
+		<macrojdepend dirclasses="${dir.classes.test}" dirreports="${dir.reports}/jdepend-src-test" />
+	</target>
+
+	<target name="javancss">
+		<antcall target="javancss-src" />
+		<antcall target="javancss-src-test" />
+	</target>
+	<target name="javancss-src">
+		<macrojavancss srcdir="${dir.src}" include="${dir.src.include}" exclude="${dir.src.exclude}" dirreports="${dir.reports}/javancss-src" />
+	</target>
+	<target name="javancss-src-test">
+		<macrojavancss srcdir="${dir.src.test}" include="${dir.src.test.include}" exclude="${dir.src.test.exclude}" dirreports="${dir.reports}/javancss-src-test" />
+	</target>
+
+	<target name="simian">
+		<antcall target="simian-src" />
+		<antcall target="simian-src-test" />
+	</target>
+
+	<target name="simian-src">
+		<macrosimian filesetid="fileset.src" dirreports="${dir.reports}/simian-src" />
+	</target>
+	<target name="simian-src-test">
+		<macrosimian filesetid="fileset.src.test" dirreports="${dir.reports}/simian-src-test" />
+	</target>
+
+	<target name="findbugs">
+		<antcall target="findbugs-src" />
+		<antcall target="findbugs-src-test" />
+	</target>
+	<target name="findbugs-src">
+		<macrofindbugs sourcepath="${dir.src}" class="${dir.classes}" auxclasspath="path.dependencies" dirreports="${dir.reports}/findbugs-src" />
+	</target>
+	<target name="findbugs-src-test">
+		<macrofindbugs sourcepath="${dir.src.test}" class="${dir.classes.test}" auxclasspath="path.dependencies.test" dirreports="${dir.reports}/findbugs-src-test" />
+	</target>
+
+	<target name="testability">
+		<antcall target="testability-src" />
+		<antcall target="testability-src-test" />
+	</target>
+
+	<target name="testability-src">
+		<macrotestability dirclasses="${dir.classes}" dirreports="${dir.reports}/testability-src" />
+	</target>
+
+	<target name="testability-src-test">
+		<macrotestability dirclasses="${dir.classes}" dirreports="${dir.reports}/testability-src-test" />
+	</target>
+
+	<target name="javadoc">
+		<antcall target="javadoc-src" />
+		<antcall target="javadoc-src-test" />
+	</target>
+
+	<target name="javadoc-src">
+		<macrojavadoc sourcepath="${dir.src}" dirreports="${dir.reports}/javadoc-src" classpathref="path.dependencies" />
+	</target>
+	<target name="javadoc-src-test">
+		<macrojavadoc sourcepath="${dir.src.test}" dirreports="${dir.reports}/javadoc-src-test" classpathref="path.dependencies.test" />
+	</target>
+	
+	<target name="schemaspy">
+			<macroschemaspy dirreports="${dir.reports}/schemaspy" />
+	</target>
+
+
+</project>

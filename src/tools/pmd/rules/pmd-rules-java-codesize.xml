@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+
+<ruleset name="All Java Rules" xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd"
+	xsi:noNamespaceSchemaLocation="http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+	<description>Code Size Rules</description>
+	
+	<rule ref="rulesets/java/codesize.xml/NPathComplexity" />
+	<rule ref="rulesets/java/codesize.xml/NcssTypeCount" />
+	<rule ref="rulesets/java/codesize.xml/NcssConstructorCount" />
+	<rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
+		<properties>
+			<property name="reportLevel" value="4" />
+		</properties>
+	</rule>
+
+	<!-- Long Parameter List -->
+	<rule ref="rulesets/java/codesize.xml/ExcessiveParameterList">
+		<properties>
+			<property name="minimum" value="3" />
+		</properties>
+	</rule>
+
+	<!-- Long Method -->
+	<rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength">
+		<properties>
+			<property name="minimum" value="5" />
+		</properties>
+	</rule>
+	<rule ref="rulesets/java/codesize.xml/NcssMethodCount">
+		<properties>
+			<property name="minimum" value="5" />
+		</properties>
+	</rule>
+
+	<!-- Large Class -->
+	<rule ref="rulesets/java/codesize.xml/ExcessiveClassLength">
+		<properties>
+			<property name="minimum" value="100" />
+		</properties>
+	</rule>
+	<rule ref="rulesets/java/codesize.xml/ExcessivePublicCount">
+		<properties>
+			<property name="minimum" value="3" />
+		</properties>
+	</rule>
+	<rule ref="rulesets/java/codesize.xml/TooManyFields">
+		<properties>
+			<property name="maxfields" value="3" />
+		</properties>
+	</rule>
+	<rule ref="rulesets/java/codesize.xml/TooManyMethods">
+		<properties>
+			<property name="maxmethods" value="5" />
+		</properties>
+	</rule>
+	
+</ruleset>

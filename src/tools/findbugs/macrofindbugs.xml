@@ -1,0 +1,25 @@
+<project>
+	<property file="tools/findbugs/findbugs.properties" />
+	<path id="path.findbugs">
+		<fileset dir="${FINDBUGS_HOME}">
+			<include name="findbugs.jar" />
+		</fileset>
+	</path>
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpathref="path.findbugs" />
+	<macrodef name="macrofindbugs">
+		<attribute name="sourcePath" />
+		<attribute name="class" />
+		<attribute name="auxClasspath" />
+		<attribute name="dirreports" />
+		<sequential>
+			<mkdir dir="@{dirreports}" />
+			<echo message="Findbugs ..." />
+			<findbugs home="${FINDBUGS_HOME}" output="xml:withMessages" reportLevel="low" effort="max" adjustExperimental="true" outputFile="@{dirreports}/report.xml" debug="false">
+				<sourcePath path="@{sourcePath}" />
+				<class location="@{class}" />
+				<auxClasspath refid="@{auxClasspath}" />
+			</findbugs>
+			<xslt in="@{dirreports}/report.xml" style="${findbugs.style}" out="@{dirreports}/index.html" />
+		</sequential>
+	</macrodef>
+</project>

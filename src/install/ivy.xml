@@ -1,0 +1,21 @@
+<ivy-module version="2.0">
+	<info organisation="junit" module="chained-resolvers" />
+	<dependencies>
+		<dependency org="net.sourceforge.pmd" name="pmd" rev="5.0.2" />
+		<dependency org="jdepend" name="jdepend" rev="2.9.1" />
+		<dependency org="com.google.testability-explorer" name="testability-explorer" rev="1.3.3" />
+		<dependency org="org.codehaus.javancss" name="javancss" rev="32.53" />
+		<dependency org="com.puppycrawl.tools" name="checkstyle" rev="5.6" />
+		<dependency org="com.google.code.findbugs" name="findbugs" rev="2.0.2" />
+		<dependency org="org.umlgraph" name="UmlGraph" rev="5.6" />
+		<dependency org="com.harukizaemon" name="simian" rev="2.3.33" />
+        <dependency org="org.crap4j" name="crap4j" rev="1.1.6" > 
+          <artifact name="crap4j" ext="zip"/> 
+        </dependency>
+        <dependency org="mysql" name="mysql-connector-java" rev="5.1.26" />
+        <dependency org="net.sourceforge" name="schemaspy" rev="5.0.0" />
+	</dependencies>
+</ivy-module>
+
+
+
