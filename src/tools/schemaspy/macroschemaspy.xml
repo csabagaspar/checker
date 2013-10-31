@@ -15,10 +15,10 @@
 				<arg line="-t mysql" />
 				<arg line="-host localhost" />
 				<arg line="-port 3306" />
-				<arg line="-db tass_pdurbs_test_configdb" />
-				<arg line="-u tass" />
-				<arg line="-s tass" />
-				<arg line="-p tass" />
+				<arg line="-db dbName" />
+				<arg line="-u user" />
+				<arg line="-s password" />
+				<arg line="-p schema" />
 				<arg line="-dp ${dir.dependencies.tools}/mysql-connector-java-5.1.26.jar" />
 				<arg line="-hq" />
 				<arg line="-o @{dirreports}" />
