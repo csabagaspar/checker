@@ -13,9 +13,18 @@
 	<import file="tools/javadoc/macrojavadoc.xml" />
 	<import file="tools/testability/macrotestability.xml" />
 	<import file="tools/schemaspy/macroschemaspy.xml" />
-
+	
+	<target name="static">
+		<antcall target="checkstyle" />
+		<antcall target="pmd" />
+	</target>
+	
+	<target name="dynamic">
+		
+	</target>
+	
 	<target name="all">
-		<antcall target="clean" />
+		<antcall target="compile" />
 		<antcall target="compileTest" />
 		<antcall target="checkstyle" />
 		<antcall target="pmd" />
@@ -52,8 +61,7 @@
 	</path>
 
 	<target name="clean">
-		<delete dir="${dir.target}" />
-		<delete dir="${dir.reports}" />
+		<delete dir="${dir.classes}" />
 	</target>
 
 	<target name="compile">

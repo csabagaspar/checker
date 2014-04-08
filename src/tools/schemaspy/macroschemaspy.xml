@@ -12,14 +12,14 @@
 			<mkdir dir="@{dirreports}" />
 			<java classname="net.sourceforge.schemaspy.Main" fork="yes" output="@{dirreports}/output.log" error="@{dirreports}/error.log">
 				<classpath refid="path.schemaspy" />
-				<arg line="-t mysql" />
+				<arg line="-t pgsql" />
 				<arg line="-host localhost" />
-				<arg line="-port 3306" />
-				<arg line="-db dbName" />
-				<arg line="-u user" />
-				<arg line="-s password" />
-				<arg line="-p schema" />
-				<arg line="-dp ${dir.dependencies.tools}/mysql-connector-java-5.1.26.jar" />
+				<arg line="-port 5432" />
+				<arg line="-db postgres" />
+				<arg line="-u postgres" />
+				<arg line="-p CarCare" />
+				<arg line="-s public" />
+				<arg line="-dp ${dir.dependencies.tools}/postgresql-9.3-1100.jdbc41.jar" />
 				<arg line="-hq" />
 				<arg line="-o @{dirreports}" />
 			</java>
