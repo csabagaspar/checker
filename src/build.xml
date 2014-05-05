@@ -17,10 +17,18 @@
 	<target name="static">
 		<antcall target="checkstyle" />
 		<antcall target="pmd" />
+		<antcall target="javancss" />
+		<antcall target="simian" />
+		<antcall target="javadoc" />
 	</target>
 	
 	<target name="dynamic">
-		
+		<antcall target="compile" />
+		<antcall target="compileTest" />
+		<antcall target="jdepend" />
+		<antcall target="findbugs" />
+		<antcall target="testability" />
+		<antcall target="crap4j" />
 	</target>
 	
 	<target name="all">
