@@ -4,8 +4,12 @@
 .classpath
 .checkstyle
 .pmd
-
 .gradle
+
+#intellij
+.idea
+*.iml
+
 
 *.class
 *.jar
