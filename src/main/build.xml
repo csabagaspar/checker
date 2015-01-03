@@ -13,7 +13,7 @@
 	<import file="tools/javadoc/macrojavadoc.xml" />
 	<import file="tools/testability/macrotestability.xml" />
 	<import file="tools/schemaspy/macroschemaspy.xml" />
-	
+
 	<target name="static">
 		<antcall target="checkstyle" />
 		<antcall target="pmd" />
@@ -21,7 +21,7 @@
 		<antcall target="simian" />
 		<antcall target="javadoc" />
 	</target>
-	
+
 	<target name="dynamic">
 		<antcall target="compile" />
 		<antcall target="compileTest" />
@@ -30,7 +30,7 @@
 		<antcall target="testability" />
 		<antcall target="crap4j" />
 	</target>
-	
+
 	<target name="all">
 		<antcall target="compile" />
 		<antcall target="compileTest" />
@@ -85,10 +85,18 @@
 	</target>
 
 	<target name="checkstyle">
+		<antcall target="checkstyle-src" />
+		<antcall target="checkstyle-src-test" />
 		<antcall target="checkstyle-duplicatedcode-src" />
 		<antcall target="checkstyle-duplicatedcode-src-test" />
 	</target>
 
+	<target name="checkstyle-src">
+		<macrocheckstyle filesetid="fileset.src" dirreports="${dir.reports}/checkstyle-src" checkstyleconfig="${checkstyle.config.checks}" />
+	</target>
+	<target name="checkstyle-src-test">
+		<macrocheckstyle filesetid="fileset.src.test" dirreports="${dir.reports}/checkstyle-src-test" checkstyleconfig="${checkstyle.config.checks}" />
+	</target>
 	<target name="checkstyle-duplicatedcode-src">
 		<macrocheckstyle filesetid="fileset.src" dirreports="${dir.reports}/checkstyle-duplicatedcode-src" checkstyleconfig="${checkstyle.config.duplicatedcode}" />
 	</target>
@@ -185,9 +193,9 @@
 	<target name="javadoc-src-test">
 		<macrojavadoc sourcepath="${dir.src.test}" dirreports="${dir.reports}/javadoc-src-test" classpathref="path.dependencies.test" />
 	</target>
-	
+
 	<target name="schemaspy">
-			<macroschemaspy dirreports="${dir.reports}/schemaspy" />
+		<macroschemaspy dirreports="${dir.reports}/schemaspy" />
 	</target>
 
 
