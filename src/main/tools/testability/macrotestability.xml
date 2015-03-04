@@ -1,6 +1,8 @@
 <project>
 	<property file="tools/testability/testability.properties" />
 	<path id="path.testability">
+		<path refid="path.dependencies" />
+		<path refid="path.dependencies.test" />
 		<fileset dir="${dir.dependencies.tools}">
 			<include name="testability-explorer-1.3.3.jar" />
 			<include name="xml-apis-1.3.04.jar" />
@@ -26,7 +28,7 @@
 				<arg value="-cp" />
 				<arg value="@{dirclasses}" />
 				<arg value="-print" />
-				<arg value="html" />
+				<arg value="source" />
 				<arg value="-printDepth" />
 				<arg value="10" />
 				<!--arg value="-srcFileUrl" />
