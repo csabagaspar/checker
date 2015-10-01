@@ -14,6 +14,7 @@
 	<import file="tools/testability/macrotestability.xml" />
 	<import file="tools/schemaspy/macroschemaspy.xml" />
 
+
 	<target name="static">
 		<antcall target="checkstyle" />
 		<antcall target="pmd" />
@@ -74,6 +75,16 @@
 
 	<target name="compile">
 		<macrocompile srcdir="${dir.src}" destdir="${dir.classes}" classpathrefid="path.dependencies" />
+	</target>
+
+	<taskdef name="classycleReport" classname="classycle.ant.ReportTask" />
+
+	<target name="report">
+		<classycleReport reportFile="classycle.xml">
+			<fileset dir=".">
+				<include name="classycle.jar" />
+			</fileset>
+		</classycleReport>
 	</target>
 
 	<target name="compileTest" depends="compile">
